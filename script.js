@@ -3,7 +3,38 @@
    ============================================================ */
 
 /* --------------------------------------------------------
-   1. CALCULATOR
+   1. MOBILE NAVIGATION
+   -------------------------------------------------------- */
+const menuToggle = document.querySelector('.menu-toggle');
+const siteNav = document.getElementById('site-nav');
+
+function closeMenu() {
+  siteNav.classList.remove('is-open');
+  menuToggle.setAttribute('aria-expanded', 'false');
+  menuToggle.setAttribute('aria-label', 'Open navigation menu');
+}
+
+menuToggle.addEventListener('click', () => {
+  const isOpen = siteNav.classList.toggle('is-open');
+  menuToggle.setAttribute('aria-expanded', String(isOpen));
+  menuToggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+});
+
+siteNav.addEventListener('click', (e) => {
+  if (e.target.tagName === 'A') closeMenu();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && siteNav.classList.contains('is-open')) closeMenu();
+});
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth >= 680) closeMenu();
+});
+
+
+/* --------------------------------------------------------
+   2. CALCULATOR
    -------------------------------------------------------- */
 const wasteInput = document.getElementById('waste-kg');
 const peopleInput = document.getElementById('people');
@@ -24,7 +55,7 @@ updateCalc(); // run on load
 
 
 /* --------------------------------------------------------
-   2. PHOTO GALLERY
+   3. PHOTO GALLERY
    -------------------------------------------------------- */
 
 // --- State ---
@@ -176,7 +207,7 @@ function renderGallery() {
 
 
 /* --------------------------------------------------------
-   3. LIGHTBOX
+   4. LIGHTBOX
    -------------------------------------------------------- */
 function openLightbox(idx) {
   lightboxIndex = idx;
